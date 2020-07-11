@@ -1,3 +1,13 @@
+# Automate backup of mysql and wordpress site on Google Compute Engine
+
+The below script for backup.sh simplifies backing up wordpress site and mysql database to cloud storage. During this backup the files are checked for integrity from Google Compute Engine and to Google Cloud Storage. When restoring form Google Cloud Storage file integrity check can be performed. 
+I have also implemented versioning of files being backup with date_year_month_day for better restore and cycling out. 
+
+To begin this script, download to a dir and chmod +x backup.sh. This will require you to have the gcloud sdk installed and authenticated click [GCLOUD](https://cloud.google.com/sdk/install) for more details. 
+
+Input is listed under arguments, this will tell the script which database to use, cloud storage to use, and file location to use. 
+example i.e ./backup.sh database_name cloudstorage_name path/to/wordpress.
+
 ```bash script
 #!/bin/bash
 
@@ -26,9 +36,6 @@ database=$1
 Bucket=$2
 dirloc=$3
 
-
-#bucket name 
-#gs://dbackuptest/wpdbup/$YEAR/$MONTH/
 
 
 # VARIABLES # 
@@ -78,8 +85,6 @@ echo "backing up finished "
 echo "Starting Downloading and testing checksum" 
 
 gsutil cp $Bucket$YEAR/$MONTH/siteDB_$TODAY.CHECKSUM $CHECKDLDB
-#gs://dbackuptest/wpdbup
-#/$YEAR/$MONTH/siteDB_$TODAY.CHECKSUM $CHECKDLDB
 
 sha512sum $CHECKDLDB | grep -Eo '^[^ ]+'  
 
@@ -103,9 +108,11 @@ fi
 
 
 ## Tar gz wordpress-website wp config files ##
+
 tar -czvf $siteFiles  $dirloc      #/var/www/html/wordpress-website/ 
 
 #Checking Data integrity 
+
 echo " backing up site files to tmp" 
 if gzip -v -t $siteFiles ; then 
 	echo "File is ok " 
