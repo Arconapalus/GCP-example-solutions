@@ -1,3 +1,4 @@
+```bash script
 #!/bin/bash
 
 ##  database backup and service backup script 
@@ -156,3 +157,4 @@ rm $CHECKDLDB
 rm $CHECKSUMDB
 
 exit 0
+```
