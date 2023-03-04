@@ -1,4 +1,4 @@
-#A continuous integration and continuous deployment to Google App Engine with Ruby on Rails
+# A continuous integration and continuous deployment to Google App Engine with Ruby on Rails
 
 
  I have the time to gain knowledge in deploying a Ruby on Rails app to Google Cloud Platform. Creating a CI/CD pipeline with CloudBees Codeship to Google App Engine (GAE). GAE is a very simplistic way of deploying services that. More information on GAE can be found here. [GAE Docs](https://cloud.google.com/appengine/)
